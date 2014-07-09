@@ -23,6 +23,23 @@ var Roots = {
   common: {
     init: function() {
       // JavaScript to be fired on all pages
+
+      // Enable tooltips
+      if ($("[data-toggle=tooltip]").length) {
+          $("[data-toggle=tooltip]").tooltip();
+      }
+
+      // Collapse the menu
+      $('header[role=banner] nav[role=navigation]').removeClass('in').addClass('collapse');
+      // Toggle navigation button is appended only when JS is enabled (since it only works when it actually is
+      // enabled...)
+      $('div.navbar-header').append(
+        '<button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">' +
+          '<span class="sr-only">Toggle navigation</span>' +
+          '<span class="icon-bar"></span>' +
+          '<span class="icon-bar"></span>' +
+          '<span class="icon-bar"></span>' +
+          '</button>');
     }
   },
   // Home page

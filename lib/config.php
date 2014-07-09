@@ -11,6 +11,7 @@ add_theme_support('jquery-cdn');            // Enable to load jQuery from the Go
 /**
  * Configuration values
  */
+define('SITE_TITLE', get_bloginfo('name')); // Custom site title (displayed only in header, not in <title> tag)
 define('GOOGLE_ANALYTICS_ID', ''); // UA-XXXXX-Y (Note: Universal Analytics only, not Classic Analytics)
 
 /**

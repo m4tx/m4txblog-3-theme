@@ -1,5 +1,10 @@
 // Bootstrap
 @import "_bootstrap";
+@import "_custom"; // FIXME Temporary transition file!
+
+// Font Awesome
+@import "../vendor/font-awesome/less/font-awesome";
+@import "_fa-variables";
 
 // Roots
 @import "_global";                   // Base styling & custom mixins
@@ -14,3 +19,7 @@
 @import "layouts/_pages";            // Page styling
 @import "layouts/pages/_home";       // Home page styling
 @import "layouts/_posts";            // Post styling
+
+// Custom
+@import "components/_recent-comments"; // Recent Comments widget
+@import "layouts/_scrollbars";       // Custom WebKit scrollbars

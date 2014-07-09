@@ -5,10 +5,12 @@
   display: block;
   margin: (@line-height-computed / 2) auto;
 }
+
 .alignleft,
 .alignright {
   margin-bottom: (@line-height-computed / 2);
 }
+
 figure.alignnone {
   margin-left: 0;
   margin-right: 0;
@@ -21,8 +23,18 @@ figure.alignnone {
     float: left;
     margin-right: (@line-height-computed / 2);
   }
+
   .alignright {
     float: right;
     margin-left: (@line-height-computed / 2);
+  }
+}
+
+#commentform {
+  & > * {
+    margin-bottom: 10px;
+  }
+  #comment {
+    resize: vertical;
   }
 }

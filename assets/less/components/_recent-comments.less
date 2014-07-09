@@ -1,0 +1,70 @@
+li.recentcomments {
+  position: relative;
+}
+
+#recentcomments {
+  .commentbox {
+    background-color: @popover-bg;
+    border: 1px solid #ccc;
+    border: 1px solid rgba(0, 0, 0, .2);
+    border-radius: 3px;
+
+    margin-left: 60px;
+    position: relative;
+
+    .boxcontent {
+      padding: 5px;
+      word-wrap: break-word;
+      word-break: break-word;
+    }
+
+    p {
+      margin: 0;
+    }
+  }
+
+  .commentbox:after,
+  .commentbox:before {
+    border-top: 10px solid transparent;
+    border-bottom: 10px solid transparent;
+    border-right: 10px solid #fff;
+    top: 50%;
+    content: '';
+    left: 10px;
+    margin-left: -20px;
+    margin-top: -8px;
+    position: absolute;
+  }
+
+  .commentbox:before {
+    border-right-color: inherit;
+    margin-left: -21px;
+  }
+
+  .userinfo {
+    text-align: right;
+    display: block;
+    color: #999;
+
+    padding: 0 6px;
+    font-size: 80%;
+  }
+
+  .avatar {
+    position: absolute;
+    top: 50%;
+    margin-top: -20px;
+    border-radius: 2px;
+
+    width: 40px;
+    height: 40px;
+  }
+
+  a .avatar:hover {
+    border-color: #aaa;
+  }
+
+  li {
+    margin-bottom: 10px;
+  }
+}
