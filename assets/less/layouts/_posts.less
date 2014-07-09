@@ -1,8 +1,36 @@
-.hentry header { }
-.hentry time { }
-.hentry .byline { }
-.hentry .entry-content { }
-.hentry footer { }
+.hentry header {
+  margin-bottom: 7px;
+
+  .postmeta {
+    .@{fa-css-prefix} {
+      margin-left: 10px;
+      margin-right: 5px;
+    }
+
+    color: @postMetaTextColor;
+    text-shadow: 0 1px 0 @grayLighter;
+
+    div.tooltip {
+      color: @tooltip-color;
+    }
+
+    a, div.tooltip {
+      text-shadow: none;
+    }
+  }
+}
+
+.hentry time {
+}
+
+.hentry .byline {
+}
+
+.hentry .entry-content {
+}
+
+.hentry footer {
+}
 
 .commentbadge-1 {
   .label-info;
