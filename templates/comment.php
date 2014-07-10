@@ -10,9 +10,9 @@
     </time><?php edit_comment_link(__('(Edit)', 'roots'), '', ''); ?>
 
     <?php if ($comment->comment_approved == '0') : ?>
-      <div class="alert">
+      <p class="text-warning comment-awaiting-moderation"">
         <?php _e('Your comment is awaiting moderation.', 'roots'); ?>
-      </div>
+      </p>
     <?php endif; ?>
 
     <?php comment_text(); ?>
