@@ -33,11 +33,7 @@
    href="<?php echo get_comments_link(); ?>" class="pull-right badge<?php
 $n = get_comments_number();
 
-// Classes array stores numbers of comments at which CSS class id is incremented
-$classes = array(
-    2, 5, 8, 11, 14,
-);
-foreach ($classes as $id => $amount) {
+foreach (unserialize(COMMENT_CLASSES) as $id => $amount) {
     if ($n < $amount) {
         echo ' commentbadge-' . $id;
         break;

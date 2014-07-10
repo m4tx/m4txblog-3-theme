@@ -1,5 +1,5 @@
 <?php
-/**
+/*
  * Enable theme features
  */
 add_theme_support('soil-clean-up');         // Enable clean up from Soil
@@ -8,11 +8,20 @@ add_theme_support('soil-nice-search');      // Enable /?s= to /search/ redirect 
 add_theme_support('bootstrap-gallery');     // Enable Bootstrap's thumbnails component on [gallery]
 add_theme_support('jquery-cdn');            // Enable to load jQuery from the Google CDN
 
-/**
+/*
  * Configuration values
  */
-define('SITE_TITLE', get_bloginfo('name')); // Custom site title (displayed only in header, not in <title> tag)
-define('GOOGLE_ANALYTICS_ID', ''); // UA-XXXXX-Y (Note: Universal Analytics only, not Classic Analytics)
+/** Custom site title (displayed only in header, not in &lt;title&gt; tag) */
+define('SITE_TITLE', get_bloginfo('name'));
+
+/** UA-XXXXX-Y (Note: Universal Analytics only, not Classic Analytics) */
+define('GOOGLE_ANALYTICS_ID', '');
+
+/**
+ * Stores numbers of comments at which CSS class id is incremented
+ * @see ../templates/entry-meta.php for the use of this config value
+ */
+define('COMMENT_CLASSES', serialize(array(2, 5, 8, 11, 14)));
 
 /**
  * .main classes
