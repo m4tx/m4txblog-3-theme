@@ -68,10 +68,72 @@ class M4txblog_Widget_Categories extends WP_Widget {
 
 }
 
-if (!function_exists('my_unregister_default_wp_widgets')) {
-  function my_unregister_default_wp_widgets() {
-    register_widget('M4txblog_Widget_Categories');
+/**
+ * Custom Tag Cloud widget class that provides Bootstrap tooltips showing the number of the posts
+ * inside each tag.
+ */
+class M4txblog_Widget_Tag_Cloud extends WP_Widget {
+  function __construct() {
+    $widget_ops = array('description' => __("Tag Cloud with Bootstrap tooltips"));
+    parent::__construct('m4txblog_tag_cloud', __('m4txblog³ Tag Cloud'), $widget_ops);
   }
 
-  add_action('widgets_init', 'my_unregister_default_wp_widgets', 1);
+  static function tagcloud_filter($output) {
+    $output = str_replace('title=\'', 'data-toggle=\'tooltip\' title=\'', $output);
+    return $output;
+  }
+
+  function widget($args, $instance) {
+    extract($args);
+    if (!empty($instance['title'])) {
+      $title = $instance['title'];
+    } else {
+      $title = __('Tags');
+    }
+
+    /** This filter is documented in wp-includes/default-widgets.php */
+    $title = apply_filters('widget_title', $title, $instance, $this->id_base);
+
+    echo $before_widget;
+    if ($title) {
+      echo $before_title . $title . $after_title;
+    }
+    echo '<div class="tagcloud">';
+
+    add_filter('wp_tag_cloud', array('M4txblog_Widget_Tag_Cloud', 'tagcloud_filter'));
+    wp_tag_cloud(apply_filters('widget_tag_cloud_args', array(
+        'number' => 20,
+        'taxonomy' => 'post_tag'
+    )));
+
+    echo "</div>\n";
+    echo $after_widget;
+  }
+
+  function update($new_instance, $old_instance) {
+    $instance['title'] = strip_tags(stripslashes($new_instance['title']));
+    return $instance;
+  }
+
+  function form($instance) {
+    ?>
+    <p>
+      <label for="<?php echo $this->get_field_id('title'); ?>"><?php _e('Title:') ?></label>
+      <input type="text" class="widefat" id="<?php echo $this->get_field_id('title'); ?>"
+             name="<?php echo $this->get_field_name('title'); ?>"
+             value="<?php if (isset ($instance['title'])) {
+               echo esc_attr($instance['title']);
+             } ?>"/>
+    </p>
+  <?php
+  }
+}
+
+if (!function_exists('m4txblog_register_widgets')) {
+  function m4txblog_register_widgets() {
+    register_widget('M4txblog_Widget_Categories');
+    register_widget('M4txblog_Widget_Tag_Cloud');
+  }
+
+  add_action('widgets_init', 'm4txblog_register_widgets', 1);
 }
