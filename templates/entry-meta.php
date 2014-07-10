@@ -21,7 +21,7 @@
             echo ', ';
         }
         echo '<a data-toggle="tooltip" title="' .
-            sprintf(_n('%s post', '%s posts', $cat->count, 'roots'), $cat->count) . '" href="' .
+            sprintf(_n('%d post', '%d posts', $cat->count, 'roots'), $cat->count) . '" href="' .
             get_category_link($cat->cat_ID) . '">' . $cat->name . '</a>';
 
         $init = false;
