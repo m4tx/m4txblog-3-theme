@@ -51,24 +51,25 @@
             <a href="<?php echo wp_logout_url(get_permalink()); ?>" title="<?php _e('Log out of this account', 'roots'); ?>"><?php _e('Log out &raquo;', 'roots'); ?></a>
           </p>
         <?php else : ?>
-          <div class="form-group">
-            <label for="author"><?php _e('Name', 'roots'); if ($req) _e(' (required)', 'roots'); ?></label>
-            <input type="text" class="form-control" name="author" id="author" value="<?php echo esc_attr($comment_author); ?>" size="22" <?php if ($req) echo 'aria-required="true"'; ?>>
+          <div class="input-group">
+            <label for="author" class="input-group-addon"><i class="ic ic-fw ic-user"></i></label>
+            <input type="text" class="form-control" name="author" id="author" value="<?php echo esc_attr($comment_author); ?>" size="40" <?php if ($req) echo 'aria-required="true"'; ?> required placeholder="<?php _e('Name', 'roots'); if ($req) _e(' (required)', 'roots'); ?>">
           </div>
-          <div class="form-group">
-            <label for="email"><?php _e('Email (will not be published)', 'roots'); if ($req) _e(' (required)', 'roots'); ?></label>
-            <input type="email" class="form-control" name="email" id="email" value="<?php echo esc_attr($comment_author_email); ?>" size="22" <?php if ($req) echo 'aria-required="true"'; ?>>
+
+          <div class="input-group">
+            <label for="email" class="input-group-addon"><i class="ic ic-fw ic-envelope"></i></label>
+            <input type="email" class="form-control" name="email" id="email" value="<?php echo esc_attr($comment_author_email); ?>" size="22" <?php if ($req) echo 'aria-required="true"'; ?> required placeholder="<?php _e('Email (will not be published, required)', 'roots'); ?>">
           </div>
-          <div class="form-group">
-            <label for="url"><?php _e('Website', 'roots'); ?></label>
-            <input type="url" class="form-control" name="url" id="url" value="<?php echo esc_attr($comment_author_url); ?>" size="22">
+
+          <div class="input-group">
+            <label for="url" class="input-group-addon"><i class="ic ic-fw ic-globe"></i></label>
+            <input type="url" class="form-control" name="url" id="url" value="<?php echo esc_attr($comment_author_url); ?>" size="22" placeholder="<?php _e('Website', 'roots'); ?>">
           </div>
         <?php endif; ?>
-        <div class="form-group">
-          <label for="comment"><?php _e('Comment', 'roots'); ?></label>
-          <textarea name="comment" id="comment" class="form-control" rows="5" aria-required="true"></textarea>
-        </div>
-        <p><input name="submit" class="btn btn-primary" type="submit" id="submit" value="<?php _e('Submit Comment', 'roots'); ?>"></p>
+        <textarea name="comment" id="comment" class="form-control" rows="5" aria-required="true" required placeholder="<?php _e('Comment', 'roots'); ?>"></textarea>
+        <?php echo '<div class="alert alert-info">' . sprintf(__('You may use these <abbr title="HyperText Markup Language">HTML</abbr> tags and attributes: %s' ), '<code>' . str_replace('&gt; &lt;', '&gt;</code> <code>&lt;', allowed_tags()) . '</code>' ) . '</div>'; ?>
+        <input name="submit" class="btn btn-primary" type="submit" id="submit" value="<?php _e('Submit Comment', 'roots'); ?>">
+
         <?php comment_id_fields(); ?>
         <?php do_action('comment_form', $post->ID); ?>
       </form>
