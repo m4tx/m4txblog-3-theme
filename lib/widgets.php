@@ -76,7 +76,7 @@ class M4txblog_Widget_Categories extends WP_Widget {
  */
 class M4txblog_Widget_Tag_Cloud extends WP_Widget {
   function __construct() {
-    $widget_ops = array('description' => __("Tag Cloud with Bootstrap tooltips"));
+    $widget_ops = array('description' => __("Tag Cloud with Bootstrap tooltips."));
     parent::__construct('m4txblog_tag_cloud', __('m4txblog³ Tag Cloud'), $widget_ops);
   }
 
@@ -131,10 +131,42 @@ class M4txblog_Widget_Tag_Cloud extends WP_Widget {
   }
 }
 
+/**
+ * Custom Nav Menu widget class that adds nav-pills CSS class to the list of items
+ */
+class M4txblog_Nav_Menu_Widget extends WP_Nav_Menu_Widget {
+  function __construct() {
+    $widget_ops = array('description' => __('Add a custom Bootstrapped menu to your sidebar.'));
+    Wp_Widget::__construct('m4txblog_nav_menu', __('m4txblog³ Nav Menu'), $widget_ops);
+  }
+
+  function widget($args, $instance) {
+    // Get menu
+    $nav_menu = !empty($instance['nav_menu']) ? wp_get_nav_menu_object($instance['nav_menu']) : false;
+
+    if (!$nav_menu) {
+      return;
+    }
+
+    $instance['title'] = apply_filters('widget_title', empty($instance['title']) ? '' : $instance['title'], $instance, $this->id_base);
+
+    echo $args['before_widget'];
+
+    if (!empty($instance['title'])) {
+      echo $args['before_title'] . $instance['title'] . $args['after_title'];
+    }
+
+    wp_nav_menu(array('fallback_cb' => '', 'menu' => $nav_menu, 'menu_class' => 'menu nav nav-pills nav-stacked'));
+
+    echo $args['after_widget'];
+  }
+}
+
 if (!function_exists('m4txblog_register_widgets')) {
   function m4txblog_register_widgets() {
     register_widget('M4txblog_Widget_Categories');
     register_widget('M4txblog_Widget_Tag_Cloud');
+    register_widget('M4txblog_Nav_Menu_Widget');
   }
 
   add_action('widgets_init', 'm4txblog_register_widgets', 1);
