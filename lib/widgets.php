@@ -9,7 +9,7 @@ class M4txblog_Widget_Categories extends WP_Widget {
   function __construct() {
     $widget_ops = array('classname' => 'widget_m4txblog_categories',
         'description' => __("Bootstrapped list of categories."));
-    parent::__construct('m4txblog_categories', __('m4txblog³ categories'), $widget_ops);
+    parent::__construct('m4txblog_categories', __('m4txblog³ Categories'), $widget_ops);
   }
 
   function widget($args, $instance) {
@@ -59,10 +59,12 @@ class M4txblog_Widget_Categories extends WP_Widget {
     $instance = wp_parse_args((array)$instance, array('title' => ''));
     $title = esc_attr($instance['title']);
     ?>
-    <p><label for="<?php echo $this->get_field_id('title'); ?>"><?php _e('Title:'); ?></label>
+    <p>
+      <label for="<?php echo $this->get_field_id('title'); ?>"><?php _e('Title:'); ?></label>
       <input class="widefat" id="<?php echo $this->get_field_id('title'); ?>"
              name="<?php echo $this->get_field_name('title'); ?>" type="text"
-             value="<?php echo $title; ?>"/></p>
+             value="<?php echo $title; ?>"/>
+    </p>
   <?php
   }
 
