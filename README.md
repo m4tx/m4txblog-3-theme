@@ -1,6 +1,6 @@
 # [m4txblog³ theme](http://m4tx.pl/)
 
-m4txblog³ theme is WordPress theme used at my blog - [m4txblog](http://m4tx.pl). m4txblog³ theme uses [Roots Starter Theme](http://roots.io/starter-theme/) as its base and [Bootstrap](http://getbootstrap.com/) as its UI.
+m4txblog³ theme is the WordPress theme I use on my blog - [m4txblog](http://m4tx.pl). m4txblog³ theme uses [Roots Starter Theme](http://roots.io/starter-theme/) as its base and [Bootstrap](http://getbootstrap.com/) as its UI.
 
 ## Features
 * Most of the features of Roots - HTML5 Boilerplate, jQuery and Modernizr included, ARIA roles, clean HTML output...
