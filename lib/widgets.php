@@ -162,11 +162,120 @@ class M4txblog_Nav_Menu_Widget extends WP_Nav_Menu_Widget {
   }
 }
 
+/**
+ * Custom Recent Comments widget class
+ */
+class M4txblog_Widget_Recent_Comments extends WP_Widget_Recent_Comments {
+
+  function __construct() {
+    $widget_ops = array('classname' => 'm4txblog_widget_recent_comments', 'description' =>
+        __('Recent Comments widget that\'s looking awesome!'));
+    Wp_Widget::__construct('m4txblog-recent-comments', __('m4txblog³ Recent Comments'),
+        $widget_ops);
+    $this->alt_option_name = 'm4txblog_widget_recent_comments';
+
+
+    add_action('comment_post', array($this, 'flush_widget_cache'));
+    add_action('transition_comment_status', array($this, 'flush_widget_cache'));
+  }
+
+  protected function widget_get_author_avatar($comment) {
+    // Construct img
+
+    // 4x bigger image (64x64 instead of 32x32) for HiDPI support
+    $img = str_replace('class=\'avatar', 'class=\'avatar img-thumbnail', get_avatar($comment, 64));
+
+    $url = $comment->comment_author_url;
+    if (empty($url) || 'http://' == $url) {
+      return $img;
+    } else {
+      return '<a href="' . $url . '">' . $img . '</a>';
+    }
+  }
+
+  private function widget_get_shortened_link($url, $text, $count) {
+    $output = "";
+
+    $excerpt = get_excerpt($text, $count);
+    $output .= empty($url) ? '<span' : '<a href="' . esc_url($url) . '"';
+
+    if ($excerpt != $text) {
+      $output .= ' title="' . $text . '"';
+    }
+    $output .= '>' . $excerpt;
+
+    $output .= empty($url) ? '</span> ' : '</a>';
+    return $output;
+  }
+
+  function widget($args, $instance) {
+    global $comments, $comment;
+
+    $cache = wp_cache_get('widget_recent_comments', 'widget');
+
+    if (!is_array($cache)) {
+      $cache = array();
+    }
+
+    if (!isset($args['widget_id'])) {
+      $args['widget_id'] = $this->id;
+    }
+
+    if (isset($cache[$args['widget_id']])) {
+      echo $cache[$args['widget_id']];
+      return;
+    }
+
+    extract($args, EXTR_SKIP);
+    $output = '';
+    $title = apply_filters('widget_title', empty($instance['title']) ? __('Recent Comments') : $instance['title'], $instance, $this->id_base);
+
+    if (empty($instance['number']) || !$number = absint($instance['number'])) {
+      $number = 5;
+    }
+
+    $comments = get_comments(apply_filters('widget_comments_args', array('number' => $number, 'status' => 'approve', 'post_status' => 'publish')));
+    $output .= $before_widget;
+    if ($title) {
+      $output .= $before_title . $title . $after_title;
+    }
+
+    $output .= '<ul id="recentcomments" class="list-unstyled">';
+    if ($comments) {
+      // Prime cache for associated posts. (Prime post term cache if we need it for permalinks.)
+      $post_ids = array_unique(wp_list_pluck($comments, 'comment_post_ID'));
+      _prime_post_caches($post_ids, strpos(get_option('permalink_structure'), '%category%'), false);
+
+      foreach ((array)$comments as $comment) {
+        //$output .=  '<li class="recentcomments">' . /* translators: comments widget: 1: comment author, 2: post link */ sprintf(_x('%1$s on %2$s', 'widgets'), get_comment_author_link(), '<a href="' . esc_url( get_comment_link($comment->comment_ID) ) . '">' . get_the_title($comment->comment_post_ID) . '</a>') . '</li>';
+        $output .= '<li class="recentcomments">';
+        $output .= $this->widget_get_author_avatar($comment);
+        $output .= '<div class="commentbox">
+                            <div class="boxcontent">
+                                <p>' . get_excerpt($comment->comment_content, 90) . '</p>
+                            </div>
+                            <small class="userinfo">
+                                ' . sprintf(_x('%1$s on %2$s', 'widgets'), $this->widget_get_shortened_link($comment->comment_author_url, $comment->comment_author, 15), $this->widget_get_shortened_link(get_comment_link($comment->comment_ID), get_the_title($comment->comment_post_ID), 40)) . '
+                            </small>
+                        </div></li>';
+      }
+    }
+    $output .= '</ul>';
+    $output .= $after_widget;
+
+    echo $output;
+    $cache[$args['widget_id']] = $output;
+    wp_cache_set('widget_recent_comments', $cache, 'widget');
+  }
+}
+
+// Register widgets
 if (!function_exists('m4txblog_register_widgets')) {
   function m4txblog_register_widgets() {
     register_widget('M4txblog_Widget_Categories');
     register_widget('M4txblog_Widget_Tag_Cloud');
     register_widget('M4txblog_Nav_Menu_Widget');
+    register_widget('M4txblog_Widget_Recent_Comments');
   }
 
   add_action('widgets_init', 'm4txblog_register_widgets', 1);
