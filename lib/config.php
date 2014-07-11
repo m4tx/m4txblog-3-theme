@@ -29,7 +29,7 @@ define('COMMENT_CLASSES', serialize(array(2, 5, 8, 11, 14)));
 function roots_main_class() {
   if (roots_display_sidebar()) {
     // Classes on pages with the sidebar
-    $class = 'col-sm-8';
+    $class = 'col-md-9';
   } else {
     // Classes on full width pages
     $class = 'col-sm-12';
@@ -42,7 +42,7 @@ function roots_main_class() {
  * .sidebar classes
  */
 function roots_sidebar_class() {
-  return apply_filters('roots/sidebar_class', 'col-sm-4');
+  return apply_filters('roots/sidebar_class', 'col-md-3');
 }
 
 /**
